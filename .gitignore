@@ -1,0 +1,16 @@
+#IDE
+/.idea/
+
+# Test
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# npm
+node_modules
+/package-lock.json
+
+# Dist
+/dist/
