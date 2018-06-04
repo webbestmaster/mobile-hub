@@ -3,13 +3,21 @@
 /* global window */
 
 import FastClick from 'fastclick';
-import TWEEN from '@tweenjs/tween.js';
 
 export function initializeEnvironment() {
-    FastClick.attach(window.document.body);
+    const {document} = window;
 
-    (function animate() {
-        window.requestAnimationFrame(animate);
-        TWEEN.update();
-    })();
+    // reduce 300ms delay
+    FastClick.attach(document.body);
+
+    // disable gesture zoom on iOS
+    document.addEventListener('gesturestart', (evt: Event) => {
+        evt.preventDefault();
+    });
+}
+
+export function pathPrefix(prefix: string): (location: Location) => boolean {
+    return (location: Location): boolean => {
+        return location.pathname.startsWith(prefix);
+    };
 }

@@ -18,14 +18,3 @@ export type ModuleType = {|
 |};
 
 export type LoadedModuleType = () => Promise<ModuleType>;
-
-declare module 'single-spa' {
-    declare export function start(): void;
-
-    declare export function registerApplication(
-        appId: string,
-        appLoader: LoadedModuleType,
-        loaderDetector: LoaderDetectorType,
-        customProps?: CustomPropsType
-    ): void;
-}
