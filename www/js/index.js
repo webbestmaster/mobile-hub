@@ -3,7 +3,7 @@
 
 import React from 'react';
 import {render} from 'react-dom';
-import {BrowserRouter} from 'react-router-dom';
+import BrowserRouter from 'react-router-dom/BrowserRouter';
 
 import App from './app';
 import {initializeEnvironment} from './app/helper.js';
