@@ -22,7 +22,7 @@ type ActionMapType = {|
     +setName: (name: ThemeNameType) => void
 |};
 
-export type ProviderValueType = {|
+export type ThemeProviderValueType = {|
     +state: StateType,
     +action: ActionMapType
 |};
@@ -72,7 +72,7 @@ class ThemeProvider extends PureComponent<PropsType, StateType> {
         }));
     }
 
-    getProvideValue(): ProviderValueType {
+    getProvideValue(): ThemeProviderValueType {
         const view = this;
 
         return {

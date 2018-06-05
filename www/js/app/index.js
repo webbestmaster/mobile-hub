@@ -11,7 +11,7 @@ import Auth from './../components/auth';
 import Header from './../components/header';
 
 import {ThemeProvider, ThemeConsumer} from './../contexts/ui';
-import type {ProviderValueType} from './../contexts/ui';
+import type {ThemeProviderValueType} from './../contexts/ui';
 
 export default class App extends PureComponent<void, void> {
     componentDidMount() {
@@ -34,7 +34,7 @@ export default class App extends PureComponent<void, void> {
     render(): Node {
         return <ThemeProvider>
             <ThemeConsumer>
-                {(val: ProviderValueType): Node => <div>{JSON.stringify(val)}</div>}
+                {(val: ThemeProviderValueType): Node => <div>{JSON.stringify(val)}</div>}
             </ThemeConsumer>
         </ThemeProvider>;
 
