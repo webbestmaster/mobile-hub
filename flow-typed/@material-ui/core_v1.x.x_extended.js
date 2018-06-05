@@ -18,6 +18,14 @@ declare module '@material-ui/core/Typography' {
     declare module.exports: $Exports<'material-ui/Typography'>;
 }
 
+declare module '@material-ui/core/Dialog' {
+    declare module.exports: $Exports<'material-ui/Dialog/Dialog'>;
+}
+
+declare module '@material-ui/core/DialogTitle' {
+    declare module.exports: $Exports<'material-ui/Dialog/DialogTitle'>;
+}
+
 
 // Filename aliases (copy from original file)
 
