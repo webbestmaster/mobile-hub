@@ -10,6 +10,9 @@ import Link from 'react-router-dom/Link';
 import Auth from './../components/auth';
 import Header from './../components/header';
 
+import {ThemeProvider, ThemeConsumer} from './../contexts/ui';
+import type {ProviderValueType} from './../contexts/ui';
+
 export default class App extends PureComponent<void, void> {
     componentDidMount() {
         registerApplication(
@@ -29,17 +32,25 @@ export default class App extends PureComponent<void, void> {
     }
 
     render(): Node {
-        return [
-            <Auth key="auth"/>,
-            <Header key="header"/>,
-            <div key="user-panel">user panel</div>,
-            <div key="app-content" className="js-app-holder">
+        return <ThemeProvider>
+            <ThemeConsumer>
+                {(val: ProviderValueType): Node => <div>{JSON.stringify(val)}</div>}
+            </ThemeConsumer>
+        </ThemeProvider>;
 
-                <Link to="/app-1">to app 1</Link>
-                <h1>push your app here</h1>
+        /*
+                return [
+                    <Auth key="auth"/>,
+                    <Header key="header"/>,
+                    <div key="user-panel">user panel</div>,
+                    <div key="app-content" className="js-app-holder">
 
-            </div>,
-            <div key="footer">footer</div>
-        ];
+                        <Link to="/app-1">to app 1</Link>
+                        <h1>push your app here</h1>
+
+                    </div>,
+                    <div key="footer">footer</div>
+                ];
+        */
     }
 }
