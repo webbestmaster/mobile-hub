@@ -28,7 +28,6 @@ export default class Header extends PureComponent<void, void> {
                 </Toolbar>
             </AppBar>
 
-
         </div>;
     }
 }
