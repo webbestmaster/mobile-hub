@@ -14,6 +14,6 @@ export function mount(props: EventPropsType): Promise<void> {
 }
 
 export function unmount(props: EventPropsType): Promise<void> {
-    console.log('app-1: - ↑↑↑ -unmount');
+    console.log('app-1: - ↑↑↑ - unmount');
     return Promise.resolve();
 }

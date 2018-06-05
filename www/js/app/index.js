@@ -33,24 +33,22 @@ export default class App extends PureComponent<void, void> {
 
     render(): Node {
         return <ThemeProvider>
+
             <ThemeConsumer>
                 {(val: ThemeProviderValueType): Node => <div>{JSON.stringify(val)}</div>}
             </ThemeConsumer>
+
+            <Auth key="auth"/>
+            <Header key="header"/>
+            <div key="user-panel">user panel</div>
+            <div key="app-content" className="js-app-holder">
+
+                <Link to="/app-1">to app 1</Link>
+                <h1>push your app here</h1>
+
+            </div>
+            <div key="footer">footer</div>
+
         </ThemeProvider>;
-
-        /*
-                return [
-                    <Auth key="auth"/>,
-                    <Header key="header"/>,
-                    <div key="user-panel">user panel</div>,
-                    <div key="app-content" className="js-app-holder">
-
-                        <Link to="/app-1">to app 1</Link>
-                        <h1>push your app here</h1>
-
-                    </div>,
-                    <div key="footer">footer</div>
-                ];
-        */
     }
 }
