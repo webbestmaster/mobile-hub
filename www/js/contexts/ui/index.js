@@ -92,19 +92,4 @@ class ThemeProvider extends PureComponent<PropsType, StateType> {
     }
 }
 
-
-/*
-class App extends PureComponent<void, void> {
-    render() {
-        return (
-            <Provider>
-                <ThemeContext.Consumer>
-                    {val => <div>{val}</div>}
-                </ThemeContext.Consumer>
-            </Provider>
-        );
-    }
-}
-*/
-
 export {ThemeProvider, Consumer as ThemeConsumer};
