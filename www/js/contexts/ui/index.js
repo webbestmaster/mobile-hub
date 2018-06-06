@@ -2,9 +2,8 @@
 
 /* eslint consistent-this: ["error", "view"] */
 
-import React, {PureComponent, createContext} from 'react';
+import React, {Component, createContext} from 'react';
 import type {Node} from 'react';
-import update from 'immutability-helper';
 import cloneDeep from 'lodash/cloneDeep';
 
 type ThemeNameType = 'light' | 'dark';
@@ -44,13 +43,11 @@ const {Provider, Consumer} = createContext({
     action: defaultAction
 });
 
-class ThemeProvider extends PureComponent<PropsType, StateType> {
+class ThemeProvider extends Component<PropsType, StateType> {
     setName = (name: ThemeNameType) => {
         const view = this; // eslint-disable-line no-invalid-this
 
-        const state = update(view.state, {name: {$set: name}});
-
-        view.setState(state);
+        view.setState({name});
     };
 
     constructor() {
@@ -67,9 +64,7 @@ class ThemeProvider extends PureComponent<PropsType, StateType> {
     componentDidMount() {
         const view = this;
 
-        view.setState(update(view.state, {
-            isMounted: {$set: true}
-        }));
+        view.setState({isMounted: true});
     }
 
     getProvideValue(): ThemeProviderValueType {

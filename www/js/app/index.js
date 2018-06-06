@@ -1,7 +1,7 @@
 // @flow
 
 import type {Node} from 'react';
-import React, {PureComponent} from 'react';
+import React, {Component} from 'react';
 import {start as singleSpaStart, registerApplication} from 'single-spa';
 import type {ModuleType} from './../../export-types/single-spa-types';
 import {isPathPrefix} from './helper';
@@ -13,7 +13,7 @@ import Header from './../components/header';
 import {ThemeProvider, ThemeConsumer} from './../contexts/ui';
 import type {ThemeProviderValueType} from './../contexts/ui';
 
-export default class App extends PureComponent<void, void> {
+export default class App extends Component<void, void> {
     componentDidMount() {
         registerApplication(
             'app-1-id',

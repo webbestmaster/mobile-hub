@@ -1,7 +1,7 @@
 // @flow
 
 import type {Node} from 'react';
-import React, {PureComponent} from 'react';
+import React, {Component} from 'react';
 
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -10,7 +10,7 @@ import Button from '@material-ui/core/Button';
 
 import style from './style.scss';
 
-export default class Header extends PureComponent<void, void> {
+export default class Header extends Component<void, void> {
     componentDidMount() {
         console.log('Header has been mounded');
     }
