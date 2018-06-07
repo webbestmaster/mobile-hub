@@ -1,7 +1,5 @@
 // @flow
 
-/* global window */
-
 import type {Node} from 'react';
 import React, {Component} from 'react';
 
@@ -10,10 +8,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 
-const canUseDOM = Boolean(typeof window !== 'undefined' &&
-        window.document && window.document.createElement);
-
-const style = canUseDOM ? require('./style.scss') : {};
+import style from './style.scss';
 
 export default class Header extends Component<void, void> {
     componentDidMount() {
