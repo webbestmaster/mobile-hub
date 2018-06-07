@@ -1,7 +1,5 @@
 // @flow
 
-/* global window */
-
 import type {Node} from 'react';
 import React, {Component} from 'react';
 

@@ -1,5 +1,6 @@
 [ignore]
 ./_res
+./server
 <PROJECT_ROOT>/node_modules/config-chain/test/broken.json
 
 [include]

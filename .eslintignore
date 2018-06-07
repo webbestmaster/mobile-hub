@@ -1,6 +1,9 @@
 # IDE
 /.idea/
 
+# ssr server
+/server
+
 # npm
 node_modules
 
