@@ -1,5 +1,7 @@
 // @flow
 
+/* eslint consistent-this: ["error", "view"] */
+
 import type {Node} from 'react';
 import React, {Component} from 'react';
 import type {ModuleType} from './../../export-types/single-spa-types';
@@ -12,7 +14,9 @@ import Header from './../components/header';
 import {ThemeProvider, ThemeConsumer} from './../contexts/ui';
 import type {ThemeProviderValueType} from './../contexts/ui';
 
-export default class App extends Component<void, void> {
+import withRouter from 'react-router-dom/withRouter';
+
+class App extends Component<void, void> {
     componentDidMount() {
         import('single-spa').then((singleSpa: mixed) => {
             // $FlowFixMe
@@ -29,7 +33,15 @@ export default class App extends Component<void, void> {
     }
 
     render(): Node {
+        const view = this;
+
+        console.log(view.props);
+        console.log(view.context);
+
         return <ThemeProvider>
+
+            <h1>{JSON.stringify(view.props)}</h1>
+            <h1>{JSON.stringify(view.context)}</h1>
 
             <ThemeConsumer>
                 {(val: ThemeProviderValueType): Node => <div>{JSON.stringify(val)}</div>}
@@ -49,3 +61,5 @@ export default class App extends Component<void, void> {
         </ThemeProvider>;
     }
 }
+
+export default withRouter(App);

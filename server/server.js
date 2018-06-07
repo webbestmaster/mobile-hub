@@ -15,7 +15,7 @@ const app = express();
 app.use(compression());
 
 app.get(['/', '/app-1'], (req, res) => {
-    const context = {};
+    const context = {key: 'the router static context'};
 
     const jsx = <StaticRouter context={context} url={req.url}>
         <App/>

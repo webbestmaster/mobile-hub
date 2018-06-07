@@ -1,6 +1,8 @@
 // flow-typed signature: 25e4ee422b9f0108f151f2c05dd2471d
 // flow-typed version: 107feb8c45/react-router-dom_v4.x.x/flow_>=v0.53.x
 
+import {ContextRouter, Location, Match, RouterHistory} from 'react-router-dom';
+
 declare module 'react-router-dom/BrowserRouter' {
     declare export type GetUserConfirmation = (
         message: string,
@@ -16,6 +18,13 @@ declare module 'react-router-dom/BrowserRouter' {
     }> {
     }
 }
+
+declare module 'react-router-dom/withRouter' {
+    declare export default function withRouter<P>(
+        Component: React$ComponentType<{| ...ContextRouter, ...P |}>
+    ): React$ComponentType<P>;
+}
+
 
 declare module 'react-router-dom/Link' {
     declare export type LocationShape = {
