@@ -15,16 +15,26 @@ const DEVELOPMENT = 'development';
 const PRODUCTION = 'production';
 
 const NODE_ENV = process.env.NODE_ENV || DEVELOPMENT;
+const SSR = process.env.SSR || '';
 
 const IS_DEVELOPMENT = NODE_ENV === DEVELOPMENT;
 const IS_PRODUCTION = NODE_ENV === PRODUCTION;
-
 const CWD = __dirname;
+const IS_SSR = SSR === 'ssr';
+
+console.log('=================');
+console.log(`NODE_ENV: ${NODE_ENV}`);
+console.log(`SSR: ${SSR}`);
+console.log(`IS_DEVELOPMENT: ${IS_DEVELOPMENT}`);
+console.log(`IS_PRODUCTION: ${IS_PRODUCTION}`);
+console.log(`CWD: ${CWD}`);
+console.log(`IS_SSR: ${IS_SSR}`);
+console.log('=================');
 
 const definePluginParams = {
-    // NODE_ENV: JSON.stringify(NODE_ENV),
-    IS_PRODUCTION: JSON.stringify(IS_PRODUCTION)
-    // IS_DEVELOPMENT: JSON.stringify(IS_DEVELOPMENT)
+    IS_PRODUCTION: JSON.stringify(IS_PRODUCTION),
+    IS_SSR: JSON.stringify(IS_SSR),
+    CWD: JSON.stringify(CWD)
 };
 
 const imageRETest = /\.(png|jpg|jpeg|gif|svg)(\?[a-z0-9=&.]+)?$/;
@@ -226,14 +236,30 @@ const webpackConfig = {
         new MiniCssExtractPlugin({
             // Options similar to the same options in webpackOptions.output
             // both options are optional
-            filename: IS_DEVELOPMENT ? '[name].css' : '[name].[hash:6].css',
-            chunkFilename: IS_DEVELOPMENT ? '[id].css' : '[id].[hash:6].css'
+            filename: '[name].css',
+            chunkFilename: '[name].css'
         }),
         new ScriptExtHtmlWebpackPlugin({defaultAttribute: 'defer'}),
         new CopyWebpackPlugin([{from: './www/favicon.ico', to: './favicon.ico'}], {debug: 'info'}),
         new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /en/)
     ]
 };
+
+if (IS_SSR) {
+    webpackConfig.entry = ['./server/server.js'];
+    webpackConfig.output = {path: path.join(CWD, './server-dist/')};
+    webpackConfig.target = 'node';
+    webpackConfig.plugins = [
+        new CleanWebpackPlugin(['./server-dist']),
+        new webpack.DefinePlugin(definePluginParams),
+        new MiniCssExtractPlugin({
+            // Options similar to the same options in webpackOptions.output
+            // both options are optional
+            filename: IS_SSR ? '[name].server.css' : '[name].css',
+            chunkFilename: IS_SSR ? '[name].server.css' : '[name].css'
+        })
+    ];
+}
 
 // webpackConfig.plugins.push(new BundleAnalyzerPlugin());
 

@@ -1,6 +1,6 @@
 [ignore]
 ./_res
-./server
+./server-dist
 <PROJECT_ROOT>/node_modules/config-chain/test/broken.json
 
 [include]

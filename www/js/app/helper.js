@@ -2,17 +2,20 @@
 
 /* global window */
 
-import FastClick from 'fastclick';
+// import FastClick from 'fastclick';
 
 export function initializeEnvironment() {
-    const {document} = window;
+    import('fastclick').then((fastClick: mixed) => {
+        const {document} = window;
 
-    // reduce 300ms delay
-    FastClick.attach(document.body);
+        // reduce 300ms delay
+        // $FlowFixMe
+        fastClick.attach(document.body);
 
-    // disable gesture zoom on iOS
-    document.addEventListener('gesturestart', (evt: Event) => {
-        evt.preventDefault();
+        // disable gesture zoom on iOS
+        document.addEventListener('gesturestart', (evt: Event) => {
+            evt.preventDefault();
+        });
     });
 }
 

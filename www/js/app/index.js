@@ -2,7 +2,6 @@
 
 import type {Node} from 'react';
 import React, {Component} from 'react';
-import {start as singleSpaStart, registerApplication} from 'single-spa';
 import type {ModuleType} from './../../export-types/single-spa-types';
 import {isPathPrefix} from './helper';
 import Link from 'react-router-dom/Link';
@@ -15,20 +14,18 @@ import type {ThemeProviderValueType} from './../contexts/ui';
 
 export default class App extends Component<void, void> {
     componentDidMount() {
-        registerApplication(
-            'app-1-id',
-            (): Promise<ModuleType> => import('./../../builds/app-1/index'),
-            isPathPrefix('/app-1'),
-            {authToken: 'some-token'}
-        );
+        import('single-spa').then((singleSpa: mixed) => {
+            // $FlowFixMe
+            singleSpa.registerApplication(
+                'app-1-id',
+                (): Promise<ModuleType> => import('./../../builds/app-1/index'),
+                isPathPrefix('/app-1'),
+                {authToken: 'some-token'}
+            );
 
-        // registerApplication(
-        //     'app-2-id',
-        //     (): Promise<ModuleType> => import('./../../builds/app-2/index'),
-        //     pathPrefix('/app-2')
-        // );
-
-        singleSpaStart();
+            // $FlowFixMe
+            singleSpa.start();
+        });
     }
 
     render(): Node {

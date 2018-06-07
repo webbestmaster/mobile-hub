@@ -2,7 +2,7 @@
 /.idea/
 
 # ssr server
-/server
+/server-dist
 
 # npm
 node_modules

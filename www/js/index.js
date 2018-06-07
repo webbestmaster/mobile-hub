@@ -1,7 +1,8 @@
 // @flow
-/* global window */
+/* global window, IS_PRODUCTION */
 
 import {initializeEnvironment} from './app/helper.js';
+
 initializeEnvironment();
 
 import React from 'react';
@@ -10,7 +11,9 @@ import BrowserRouter from 'react-router-dom/BrowserRouter';
 
 import App from './app';
 
-hydrate(
+const reactDomRender = IS_PRODUCTION ? hydrate : render; // eslint-disable-line id-match
+
+reactDomRender(
     <BrowserRouter>
         <App/>
     </BrowserRouter>,
