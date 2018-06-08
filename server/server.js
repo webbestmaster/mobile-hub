@@ -4,7 +4,7 @@ import compression from 'compression';
 import path from 'path';
 
 import React from 'react';
-import {renderToString} from 'react-dom/server';
+import {renderToString, renderToNodeStream} from 'react-dom/server';
 import {StaticRouter} from 'react-router-dom';
 import App from './../www/js/app/index';
 
@@ -14,31 +14,10 @@ const app = express();
 
 app.use(compression());
 
-app.get(['/', '/app-1'], (req, res) => {
-    const context = {key: 'the router static context'};
-
-    const jsx = <StaticRouter context={context} url={req.url}>
-        <App/>
-    </StaticRouter>;
-    // const reactDom = renderToString(jsx);
-    // const reduxState = store.getState();
-    // const helmetData = Helmet.renderStatic();
-
-    res.writeHead(200, {'Content-Type': 'text/html'});
-    res.end(htmlTemplate(renderToString(jsx)));
-});
-
-app.use(express.static(path.resolve(CWD, 'dist')));
-
-app.listen(serverPort);
-
-console.log('Server start to listen:', serverPort);
-
+// <template part>
 const hash = Date.now().toString(10);
 
-function htmlTemplate(reactDom) {
-    return `
-        <!DOCTYPE html>
+const templateBegin = `<!DOCTYPE html>
         <html>
         <head>
             <title>Mobile Hub - SSR</title>
@@ -54,9 +33,44 @@ function htmlTemplate(reactDom) {
             <link href="/main.css?${hash}" rel="stylesheet"/>
         </head>
         <body>
-            <div class="js-app-wrapper">${reactDom}</div>
+            <div class="js-app-wrapper">`;
+
+const templateEnd = `</div>
             <script src="/main.js?${hash}"></script>
         </body>
-        </html>
-    `;
-}
+        </html>`;
+
+// </template part>
+
+app.get(['/', '/app-1'], (req, res) => {
+    const context = {key: 'the router static context'};
+
+    const jsx = <StaticRouter context={context} url={req.url}>
+        <App/>
+    </StaticRouter>;
+
+    res.writeHead(200, {'Content-Type': 'text/html'});
+
+    const stream = renderToNodeStream(jsx);
+
+    res.write(templateBegin);
+
+    stream.pipe(res, {end: false});
+    stream.on('end', () => {
+        res.write(templateEnd);
+        res.end();
+    });
+
+    stream.on('error', () => {
+        res.write('<h1>Smth wrong</h1>' + templateEnd);
+        res.end();
+    });
+
+    // res.end([templateBegin, renderToString(jsx), templateEnd].join(''));
+});
+
+app.use(express.static(path.resolve(CWD, 'dist')));
+
+app.listen(serverPort);
+
+console.log('Server start to listen:', serverPort);
